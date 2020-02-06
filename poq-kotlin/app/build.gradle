@@ -1,0 +1,95 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "kotlin-kapt"
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.tecknoworks.poq"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'BASE_URL', '"https://api.github.com/orgs/square/"'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "testing"
+    productFlavors {
+        product {
+            // nothing
+        }
+        // Temp fix for issue https://github.com/mockk/mockk/issues/281
+        uiTest {
+            dimension "testing"
+            minSdkVersion 26
+        }
+    }
+}
+
+dependencies {
+    def okHttpVersion = "3.10.0"
+    def retrofitVersion = "2.6.0"
+    def moshiVersion = "1.9.2"
+    def daggerVersion = "2.26"
+    def kotlinCoroutineVersion = "1.0.1"
+    def mockKVersion = '1.9.3'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi-kotlin:${moshiVersion}"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+    implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
+
+    // Retrofit2
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
+
+    // Dagger
+    implementation "com.google.dagger:dagger-android:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android-support:${daggerVersion}" // if you use the support libraries
+    kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    //Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinCoroutineVersion}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinCoroutineVersion}"
+
+    //  to build TestComponent in test/ folder
+    kaptTest "com.google.dagger:dagger-compiler:${daggerVersion}"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    testImplementation 'junit:junit:4.12'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+
+    //  mockk
+    testImplementation "io.mockk:mockk:${mockKVersion}"
+    androidTestImplementation "io.mockk:mockk-android:${mockKVersion}"
+}
