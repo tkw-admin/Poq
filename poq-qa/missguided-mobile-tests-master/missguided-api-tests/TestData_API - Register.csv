@@ -1,0 +1,15 @@
+username,password,isPromotion,firstName,email,encryptedPassword,lastName,ResponseCode,ResponseMessage,TestSummary
+testaltomnote@gmail.com,TE12st34_poq,false,test,testaltomnote@gmail.com,TE12st34_poq,poq,200,Authentication complete.,Valid Credentials
+testaltomnote+poq@gmail.com,CaDLp3A4UX4riB5LA89Sru2WBmzRUmWZ4yviJuYi9aDKnjZy6Y2AMwgQS9DcecytGpb1bPPwo8O1imQE2vactp4axyH8z50S6423PdIVL37mk0KEh8snygXMkcNVpE9ZoE361GbXSCUBAGKAwkIzfOpb1rL8xGQ9fKPOJO9ALgcsUIQR8DyAJPAYM8TsA1ch7trDgEb088mb5OlpA1p3MBQmhWM2AZ35ekGqrdfeJLQbfgT2Hr5toV9QJmSg56Aj,false,test,testaltomnote+poq@gmail.com,,poq,200,Authentication complete.,Valid Credentials - 256 Chars Password
+testaltomnote+poq@gmail.com,熊本大学熊本,false,test,testaltomnote+poq@gmail.com,,poq,200,Authentication complete.,Double Byte Characters
+testaltomnote+poq@gmail.com,testăr,false,test,testaltomnote+poq@gmail.com,,poq,200,Authentication complete.,Use non-ascii (non-english) characters
+testaltomnote+poq@gmail.com,testça,false,test,testaltomnote+poq@gmail.com,,poq,200,Authentication complete.,Use non-ascii (non-english) characters
+testaltomnote+poq@gmail.com,testäa,false,test,testaltomnote+poq@gmail.com,,poq,200,Authentication complete.,Use non-ascii (non-english) characters
+testaltomnote+poq@gmail.com,,false,test,testaltomnote+poq@gmail.com,,poq,400,An error occurred while processing your request.,Empty password
+,123456,false,test,testaltomnote+poq@gmail.com,,poq,400,An error occurred while processing your request.,Empty Username
+testaltomnote+poq@gmail.com,12345,false,test,testaltomnote+poq@gmail.com,,poq,400,An error occurred while processing your request.,Less than 6 characters
+testaltomnote@gmail,123456,false,test,testaltomnote@gmail,,poq,400,An error occurred while processing your request.,Invalid email address
+@gmail.com,123456,false,test,@gmail.com,,poq,400,An error occurred while processing your request.,Invalid email address
+testaltomnote@gmail.c,123456,false,test,testaltomnote@gmail.c,,poq,400,An error occurred while processing your request.,Invalid email address
+testaltomnote+poqnoemail@gmail.com,TE12st34_poq,false,test,,,poq,400,Object reference not set to an instance of an object.,Emptry email field
+testaltomnote@gmail.com,TE12st34_poq,false,test,testaltomnote@gmail.com,,poq,400,An account with this email address already exists.,Existing account with specified email.

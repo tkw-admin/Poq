@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "70dc755d-4517-4083-ab09-c83577b984b5",
+		"name": "POQ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "606e275a-1dc4-4142-9e48-37d40d167570",
+						"exec": [
+							"",
+							"const moment = require('moment');",
+							"",
+							"var respCode = pm.variables.get(\"ResponseCode\");",
+							"// for successfull registration we need unique email addresses",
+							"if (respCode == 200){",
+							"    pm.variables.set(\"username-with-timestamp\",pm.variables.get(\"username\").replace(\"@\", \"-\".concat(moment().format(\"x\"),\"@\")));",
+							"    pm.variables.set(\"email-with-timestamp\",pm.variables.get(\"email\").replace(\"@\", \"-\".concat(moment().format(\"x\"),\"@\")));",
+							"} else{",
+							"    pm.variables.set(\"username-with-timestamp\",pm.variables.get(\"username\"));",
+							"    pm.variables.set(\"email-with-timestamp\",pm.variables.get(\"email\"));",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "af7b92b6-1eb9-4fe3-a179-5cbcea1f92eb",
+						"exec": [
+							"var testSummary = pm.variables.get(\"TestSummary\");",
+							"",
+							"pm.test(\"Status code - \".concat(testSummary), function () {",
+							"    var responseCode = pm.variables.get(\"ResponseCode\");",
+							"    pm.response.to.have.status(responseCode);",
+							"});",
+							"",
+							"pm.test(\"Body message - \".concat(testSummary), function () {",
+							"    var jsonData = pm.response.json();",
+							"    var responseMessage = pm.variables.get(\"ResponseMessage\");",
+							"    pm.expect(jsonData.message).to.eql(responseMessage);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"isPromotion\":{{isPromotion}},\n\t\"credentials\":{\n\t\t\"password\":\"{{password}}\",\n\t\t\"username\":\"{{username-with-timestamp}}\"\n\t},\n\t\"profile\":{\n\t\t\"firstName\":\"{{firstName}}\",\n\t\t\"email\":\"{{email-with-timestamp}}\",\n\t\t\"encryptedPassword\":\"{{encryptedPassword}}\",\n\t\t\"isPromotion\":{{isPromotion}},\n\t\t\"lastName\":\"{{lastName}}\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/{{AccountRegister}}/{{CountryCode}}/{{$guid}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"{{AccountRegister}}",
+						"{{CountryCode}}",
+						"{{$guid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7aaa8975-b8aa-45ba-8ec4-14e774a51694",
+						"exec": [
+							"var testSummary = pm.variables.get(\"TestSummary\");",
+							"",
+							"pm.test(\"Status code - \".concat(testSummary), function () {",
+							"    var responseCode = pm.variables.get(\"ResponseCode\");",
+							"    pm.response.to.have.status(responseCode);",
+							"});",
+							"",
+							"pm.test(\"Body message - \".concat(testSummary), function () {",
+							"    var jsonData = pm.response.json();",
+							"    var responseMessage = pm.variables.get(\"ResponseMessage\");",
+							"    pm.expect(jsonData.message).to.eql(responseMessage);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\",\n\t\"isMasterCard\": false\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/{{Login}}/{{CountryCode}}/{{$guid}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"{{Login}}",
+						"{{CountryCode}}",
+						"{{$guid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ContentBlocks",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "platform",
+						"value": "iphone",
+						"type": "text"
+					},
+					{
+						"key": "poq-app-id",
+						"value": "{{CountryCode}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/{{ContentBlocks}}/{{CountryCode}}/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"{{ContentBlocks}}",
+						"{{CountryCode}}",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ProductsDetails",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "69f8fdad-fe0b-4174-8a31-671eec692d36",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/{{ProductsDetail}}/{{CountryCode}}/{{ProductId}}?externalId=&poqUserId={{$guid}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"{{ProductsDetail}}",
+						"{{CountryCode}}",
+						"{{ProductId}}"
+					],
+					"query": [
+						{
+							"key": "externalId",
+							"value": ""
+						},
+						{
+							"key": "poqUserId",
+							"value": "{{$guid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f4d4c253-388f-42ff-bc48-2826219b4ddf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a2034df8-7a9b-4fa0-8b97-e258fca0124d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "7d8a2fea-7770-40fe-bd5f-bd1beae599ba",
+			"key": "URL",
+			"value": "https://missguided.poq.io",
+			"type": "string"
+		},
+		{
+			"id": "e9306e7f-8fb2-487e-81b9-24eba5ed9ffc",
+			"key": "CountryCode",
+			"value": "76",
+			"type": "string"
+		},
+		{
+			"id": "56f85444-2a0a-460c-bdf2-c390ee677155",
+			"key": "AccountRegister",
+			"value": "account/register",
+			"type": "string"
+		},
+		{
+			"id": "38475d9a-1c96-43d9-9c09-61c116d0d41b",
+			"key": "Login",
+			"value": "account/login",
+			"type": "string"
+		},
+		{
+			"id": "507f77dc-0c8d-4632-9ef3-ff97a8926467",
+			"key": "ContentBlocks",
+			"value": "ContentBlocks",
+			"type": "string"
+		},
+		{
+			"id": "f4c3573f-21b1-4e77-9dc3-deeeac3e4ce5",
+			"key": "ProductsDetail",
+			"value": "products/details",
+			"type": "string"
+		},
+		{
+			"id": "aa2b1234-5e9d-43d8-bc2c-91210280ba0b",
+			"key": "ProductId",
+			"value": "5448980",
+			"type": "string"
+		},
+		{
+			"id": "abab5918-9eb8-4404-8562-6aea558c8786",
+			"key": "ProductByExtIds",
+			"value": "products/by_external_ids",
+			"type": "string"
+		}
+	]
+}
