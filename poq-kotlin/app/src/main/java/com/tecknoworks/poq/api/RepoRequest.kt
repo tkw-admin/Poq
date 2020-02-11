@@ -1,6 +1,6 @@
 package com.tecknoworks.poq.api
 
-import com.tecknoworks.poq.api.model.Repository
+import com.tecknoworks.poq.api.model.RepositoryDTO
 import retrofit2.Response
 import retrofit2.http.GET
 
@@ -10,6 +10,6 @@ import retrofit2.http.GET
 interface RepoRequest {
 
     @GET("repos")
-    suspend fun getRepos() : Response<List<Repository>>
+    suspend fun getRepos() : Response<List<RepositoryDTO>>
 
 }

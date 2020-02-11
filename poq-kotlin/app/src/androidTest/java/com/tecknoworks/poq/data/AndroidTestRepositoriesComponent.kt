@@ -1,6 +1,7 @@
 package com.tecknoworks.poq.data
 
 import com.tecknoworks.poq.ActivityScope
+import com.tecknoworks.poq.data.mapper.MapperModule
 import com.tecknoworks.poq.ui.main.MainFragmentTest
 import dagger.Subcomponent
 
@@ -9,7 +10,7 @@ import dagger.Subcomponent
  */
 
 @ActivityScope
-@Subcomponent
+@Subcomponent(modules = [MapperModule::class])
 interface AndroidTestRepositoriesComponent: RepositoriesComponent {
 
     @Subcomponent.Builder

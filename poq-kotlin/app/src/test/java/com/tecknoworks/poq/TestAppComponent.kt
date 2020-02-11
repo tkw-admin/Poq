@@ -1,6 +1,8 @@
 package com.tecknoworks.poq
 
 import com.tecknoworks.poq.api.ApiModule
+import com.tecknoworks.poq.data.RepositoriesModule
+import com.tecknoworks.poq.data.mapper.MapperModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -9,7 +11,7 @@ import javax.inject.Singleton
  */
 
 @Singleton
-@Component(modules = [ApiModule::class])
+@Component(modules = [ApiModule::class, RepositoriesModule::class, MapperModule::class])
 interface TestAppComponent : PoqApplicationComponent {
     fun inject(appRepositoryInjectTest: AppRepositoryInjectTest)
 }

@@ -4,14 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tecknoworks.poq.R
-import com.tecknoworks.poq.api.model.Repository
+import com.tecknoworks.poq.api.model.RepositoryDTO
+import com.tecknoworks.poq.data.model.PoqRepository
 
 /**
  * Created by Mihai Ionescu on 2020-01-31.
  */
 class RepositoriesAdapter : RecyclerView.Adapter<RepositoryViewHolder>() {
 
-    private var repositories = ArrayList<Repository>()
+    private var repositories = ArrayList<PoqRepository>()
 
     override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
         val repository = repositories[position]
@@ -25,7 +26,7 @@ class RepositoriesAdapter : RecyclerView.Adapter<RepositoryViewHolder>() {
 
     override fun getItemCount(): Int = repositories.size
 
-    fun setRepositories(repositories: List<Repository>) {
+    fun setRepositories(repositories: List<PoqRepository>) {
         this.repositories.clear()
         this.repositories.addAll(repositories)
     }

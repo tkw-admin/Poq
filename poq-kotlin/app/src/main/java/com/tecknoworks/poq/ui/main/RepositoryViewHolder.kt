@@ -2,7 +2,8 @@ package com.tecknoworks.poq.ui.main
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.tecknoworks.poq.api.model.Repository
+import com.tecknoworks.poq.api.model.RepositoryDTO
+import com.tecknoworks.poq.data.model.PoqRepository
 import kotlinx.android.synthetic.main.repository_item_row.view.*
 
 /**
@@ -11,9 +12,9 @@ import kotlinx.android.synthetic.main.repository_item_row.view.*
 class RepositoryViewHolder constructor(v: View) : RecyclerView.ViewHolder(v) {
 
     private var view: View = v
-    private var repository: Repository? = null
+    private var repository: PoqRepository? = null
 
-    fun populate(repository: Repository) {
+    fun populate(repository: PoqRepository) {
         this.repository = repository
         view.repositoryName.text = repository.name
         view.repositoryDescription.text = repository.description

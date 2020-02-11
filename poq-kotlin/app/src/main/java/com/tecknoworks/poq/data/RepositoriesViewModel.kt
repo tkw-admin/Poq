@@ -1,21 +1,17 @@
 package com.tecknoworks.poq.data
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.tecknoworks.poq.ActivityScope
-import com.tecknoworks.poq.api.RepoRequest
-import com.tecknoworks.poq.api.model.Repository
+import com.tecknoworks.poq.data.model.PoqRepository
+import com.tecknoworks.poq.data.repository.PoqRepositoryRepository
+import com.tecknoworks.poq.log.PoqLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-@ActivityScope
-class RepositoriesViewModel @Inject constructor(private val repoRequest: RepoRequest) {
+class RepositoriesViewModel @Inject constructor(private val poqRepositoryRepository: PoqRepositoryRepository) {
     private val parentJob = Job()
 
     private val coroutineContext: CoroutineContext
@@ -23,19 +19,19 @@ class RepositoriesViewModel @Inject constructor(private val repoRequest: RepoReq
 
     private val scope = CoroutineScope(coroutineContext)
 
-    val repositoriesLiveData = MutableLiveData<List<Repository>>()
+    val repositoriesLiveData = MutableLiveData<List<PoqRepository>>()
 
     fun getRepositoryList() {
         scope.launch {
-            // We might need a better error handling
-            try {
-                val repositoryListResponse = repoRequest.getRepos()
-                repositoriesLiveData.postValue(repositoryListResponse.body())
-            } catch (e : Exception) {
-                Log.d("getRepositories", e.toString())
-                repositoriesLiveData.postValue(null)
+            when (val result = poqRepositoryRepository.getRepositories()) {
+                is PoqResult.Success -> {
+                    repositoriesLiveData.postValue(result.value)
+                }
+                is PoqResult.Failure -> {
+                    PoqLog.logEvent(result.throwable.message.orEmpty())
+                    repositoriesLiveData.postValue(null)
+                }
             }
-
         }
     }
 }

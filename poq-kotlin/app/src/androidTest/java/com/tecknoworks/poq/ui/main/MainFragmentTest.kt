@@ -10,7 +10,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.tecknoworks.poq.*
 import com.tecknoworks.poq.api.RepoRequest
-import com.tecknoworks.poq.api.model.Repository
+import com.tecknoworks.poq.api.model.RepositoryDTO
 import com.tecknoworks.poq.data.RepositoriesViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -111,7 +111,7 @@ class MainFragmentTest {
     fun responseOk() {
 
         // given
-        val repositoryMock = mockk<Repository>{
+        val repositoryMock = mockk<RepositoryDTO>{
             this.name = "test name"
             this.description = "test description"
         }
